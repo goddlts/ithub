@@ -38,7 +38,18 @@ exports.handleSignup = (req, res) => {
         console.log(err);
         return res.send('服务器内部错误');
       }
-      console.log(results);
+      
+      // console.log(results);
+      if (results.affectedRows === 1) {
+        // 注册成功
+        res.redirect('/signin');
+
+        // res.send('<script>alert("注册成功");location.href="/signin";</script>');
+      } else {
+        res.render('signup.html', {
+          msg: '注册失败'
+        });
+      }
     }
   );
 };
