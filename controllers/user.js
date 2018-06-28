@@ -8,6 +8,7 @@
 // });
 
 const db = require('./db_helper');
+const md5 = require('md5');
 
 // 1 展示登录页面
 // 2 处理登录逻辑
@@ -64,6 +65,8 @@ exports.handleSignup = (req, res) => {
           // 插入数据
           // 获取post数据 配置body-parser 在app.js中配置
           req.body.createdAt = new Date();
+          // 对密码进行处理
+          req.body.password = md5(req.body.password);
           // insert into `users`(nickname, pwd) values('zs', 18)
           // 插入数据库
           db.query(
