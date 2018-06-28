@@ -15,13 +15,13 @@ module.exports = router;
 
 // 设置路由规则
 
-// 1 index.js 不需要登录处理的功能
-
+// 1 index.js 不需要登录展示的功能
 router.get('/', indexCtrl.showIndex);
 
+// 2 user.js   登录 注册 退出
 router
-  .get('/signin', (req,res) => {
-    res.send('signin');
-  })
-  .post('/signin', (req, res) => {
-  })
+  .get('/signin', userCtrl.showSignin)
+  .post('/signin', userCtrl.handleSignin)
+  .get('/signup', userCtrl.showSignup)
+  .post('/signup', userCtrl.handleSignup)
+  .get('/signout', userCtrl.handleSignout)
