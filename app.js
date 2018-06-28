@@ -7,6 +7,7 @@ const express = require('express');
 const expressArtTemplate = require('express-art-template');
 // 导入路由模块
 const router = require('./routes/router');
+const bodyParser = require('body-parser');
 const app = express();
 
 const PORT = 3000;
@@ -21,6 +22,13 @@ app.use('/public', express.static('./public'));
 app.use('/node_modules', express.static('./node_modules'));
 // 配置模板引擎
 app.engine('html', expressArtTemplate);
+// 配置bodyParser
+// parse application/x-www-form-urlencoded
+// name=zs&pwd=123
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+// { "name": "zs", "age": 18 }
+// app.use(bodyParser.json());
 
 
 // 注册路由

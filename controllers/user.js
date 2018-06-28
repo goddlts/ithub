@@ -12,7 +12,6 @@ const db = require('./db_helper');
 // 1 展示登录页面
 // 2 处理登录逻辑
 // 3 展示注册页面
-// 4 处理注册逻辑
 // 5 退出
 exports.showSignin = (req, res) => {
   // res.send('showSignin');
@@ -25,8 +24,23 @@ exports.showSignup = (req, res) => {
   // res.send('showSignup');
   res.render('signup.html');
 };
+// 4 处理注册逻辑
 exports.handleSignup = (req, res) => {
-  res.send('handleSignup');
+  // 获取post数据 配置body-parser 在app.js中配置
+  req.body.createdAt = new Date();
+  // insert into `users`(nickname, pwd) values('zs', 18)
+  // 插入数据库
+  db.query(
+    'insert into `users` set ?',
+    req.body,
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.send('服务器内部错误');
+      }
+      console.log(results);
+    }
+  );
 };
 exports.handleSignout = (req, res) => {
   res.send('handleSignout');
