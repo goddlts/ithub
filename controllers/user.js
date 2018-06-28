@@ -11,15 +11,48 @@ const db = require('./db_helper');
 const md5 = require('md5');
 
 // 1 展示登录页面
-// 2 处理登录逻辑
 // 3 展示注册页面
 // 5 退出
 exports.showSignin = (req, res) => {
   // res.send('showSignin');
   res.render('signin.html');
 };
+// 2 处理登录逻辑
 exports.handleSignin = (req, res) => {
-  res.send('handleSignin');
+  // 2.1 验证用户的输入
+  // TODO
+  // 2.2 验证邮箱和密码是否正确
+  db.query(
+    'select * from `users` where `email`=?',
+    req.body.email,
+    (err, results) => {
+      if (err) {
+        return res.send('服务器内部错误');
+      }
+      // 判断邮箱是否存在
+      if (results.length <= 0) {
+        // { code: 401, msg: '不存在' }
+        return res.json({
+          code: 401,
+          msg: '邮箱地址不存在'
+        });
+      }
+      // 判断密码是否正确
+      const password = md5(req.body.password);
+      if (password !== results[0].password) {
+        return res.json({
+          code: 402,
+          msg: '密码错误'
+        });
+      }
+      // 如果用ajax请求的话，没办法使用res.redirect()
+      // 成功
+      res.json({
+        code: 200,
+        msg: '登录成功'
+      });
+    }
+  );
 };
 exports.showSignup = (req, res) => {
   // res.send('showSignup');
