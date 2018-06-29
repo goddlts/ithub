@@ -39,25 +39,25 @@
   </div>
   <script src="/node_modules/jquery/dist/jquery.js"></script>
   <script>
-    $('#signin_form').on('submit', handleSubmit)
+    $('#signin_form').submit(function (e) {
+      // 取消表单的默认行为
+      e.preventDefault();
+      // TODO 表单验证
 
-    function handleSubmit (e) {
-      e.preventDefault()
-      var formData = $(this).serialize()
-      $.post('/signin', formData, function (data) {
-        switch(data.code) {
-          case 200:
-            window.location.href = '/'
-            break
-          case 1:
-            window.alert('用户名不存在')
-            break
-          case 2:
-            window.alert('密码不正确')
-            break
-        }
-      })
-    }
+      // 获取表单数据
+      // email=123@11.cn&password=123
+      var data = $(this).serialize();
+      // console.log(data);
+      $.post('/signin', data, function (resData) {
+        // { code: 200, msg: '' }
+
+        var { code, msg } = resData;
+        if (code === 200) {
+          location.href = '/';
+        } 
+        alert(msg);
+      });
+    });
   </script>
 </body>
 
