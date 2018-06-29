@@ -24,4 +24,15 @@ router
   .post('/signin', userCtrl.handleSignin)
   .get('/signup', userCtrl.showSignup)
   .post('/signup', userCtrl.handleSignup)
-  .get('/signout', userCtrl.handleSignout)
+  .get('/signout', userCtrl.handleSignout);
+
+// 3 topic.js 
+router
+  .get('/topic/create', topicCtrl.showCreate)
+  .post('/topic/create', topicCtrl.handleCreate)
+  // 动态路由，可以传递参数
+  .get('/topic/:topicID', topicCtrl.showTopic)
+  .get('/topic/:topicID/edit', topicCtrl.showEdit)
+  .post('/topic/:topicID/edit', topicCtrl.handleEdit)
+  .get('/topic/:topicID/delete', topicCtrl.handleDelete)
+
