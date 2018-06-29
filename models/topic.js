@@ -76,5 +76,18 @@ exports.update = (topic, callback) => {
   );
 };
 
+// 查询所有话题
+exports.getAll = (callback) => {
+  db.query(
+    'select topics.id, nickname, title, topics.createdAt from `topics` JOIN `users` ON userId = users.id',
+    (err, results) => {
+      if (err) {
+        return callback(err);
+      }
+      callback(null, results);
+    }
+  );
+};
+
 
 
