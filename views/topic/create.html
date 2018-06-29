@@ -14,7 +14,7 @@
       <form id="form">
         <div class="form-group">
           <label for="cid">选择板块</label>
-          <select class="form-control">
+          <select name="categoryId" id="categoryId" class="form-control">
             {{ each categories }}
               <option value="{{ $value.id }}">{{ $value.name }}</option>
             {{ /each }}
@@ -37,15 +37,24 @@
   <script src="/node_modules/jquery/dist/jquery.js"></script>
   <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
   <script>
-    $('#form').on('submit', handleSubmit)
+    $('#form').on('submit', function (e) {
+      // 阻止表单的默认行为
+      e.preventDefault();
 
-    function handleSubmit(e) {
-      e.preventDefault()
-      var formData = $(this).serialize()
+      // 获取表单数据
+      var formData = $(this).serialize();
+      // 发送请求
       $.post('/topic/create', formData, function (data) {
-        console.log(data)
-      })
-    }
+        var { code, msg } = data;
+        if (code === 200) {
+          location.href = '/';
+        } else {
+          alert(msg);
+        }
+      });
+
+      // $.ajax
+    });
   </script>
 </body>
 

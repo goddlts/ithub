@@ -11,6 +11,7 @@ exports.showCreate = (req, res) => {
 };
 // 2 处理添加话题  -- 接口
 exports.handleCreate = (req, res) => {
+  // 判断session中是否有数据
   if (!req.session.user) {
     res.json({
       code: 403,
