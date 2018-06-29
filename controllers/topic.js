@@ -1,5 +1,12 @@
+const categoryModel = require('../models/category');
+
+// 1 显示添加话题的页面
 exports.showCreate = (req, res) => {
-  res.send('showCreate');
+  categoryModel.getAll((err, categories) => {
+    res.render('topic/create.html', {
+      categories
+    });
+  });
 };
 exports.handleCreate = (req, res) => {
   res.send('handleCreate');
