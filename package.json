@@ -25,6 +25,7 @@
     "bootstrap": "^3.3.7",
     "express": "^4.16.3",
     "express-art-template": "^1.0.1",
+    "express-mysql-session": "^2.0.0",
     "express-session": "^1.15.6",
     "jquery": "^3.3.1",
     "md5": "^2.2.1",
