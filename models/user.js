@@ -2,6 +2,7 @@ const db = require('./db_helper');
 
 // 增加一个用户
 exports.createUser = (user, callback) => {
+  // insert into users(password, nickname) values(?,?)
   db.query(
     'insert into `users` set ?',
     user,

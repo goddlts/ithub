@@ -46,7 +46,14 @@
 
       // 获取表单数据
       // email=123@11.cn&password=123
-      var data = $(this).serialize();
+      // var data = $(this).serialize();
+
+      
+      var data = {
+        email: $('#email').val(),
+        password: $('#password').val()
+      }
+      // 传对象的时候，jQuery的方法，会自动把对象转换成email=123@11.cn&password=123形式
       // console.log(data);
       $.post('/signin', data, function (resData) {
         // { code: 200, msg: '' }

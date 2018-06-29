@@ -55,10 +55,22 @@ exports.handleSignup = (req, res) => {
     if (err) {
       return res.send('服务器内部错误');
     }
+    if (user) {
+      // 邮箱已经存在
+      return res.render('signup.html', {
+        msg: '邮箱已经存在'
+      });
+    }
     // 验证昵称
     userModel.getByNickname(req.body.nickname, (err, user) => {
       if (err) {
         return res.send('服务器内部错误');
+      }
+      if (user) {
+        // 昵称已经存在
+        return res.render('signup.html', {
+          msg: '昵称已经存在'
+        });
       }
       req.body.createdAt = new Date();
       req.body.password = md5(req.body.password);
@@ -67,7 +79,7 @@ exports.handleSignup = (req, res) => {
         if (isOK) {
           res.redirect('/signin');
         } else {
-          res.render('/signup', {
+          res.render('signup.html', {
             msg: '注册失败'
           });
         }
