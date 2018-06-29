@@ -9,14 +9,13 @@ const expressArtTemplate = require('express-art-template');
 const router = require('./routes/router');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-var MySQLStore = require('express-mysql-session')(session);
+const MySQLStore = require('express-mysql-session')(session);
+const config = require('./config');
 const app = express();
 
-const PORT = 3000;
-
 // 监听端口  
-app.listen(PORT, () => {
-  console.log('监听 3000');
+app.listen(config.port, () => {
+  console.log('监听 ' + config.port);
 });
 
 // 处理静态资源  -- 下载bootstrap@3.3.7  jquery
@@ -32,13 +31,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // { "name": "zs", "age": 18 }
 // app.use(bodyParser.json());
 
+
+var db = config.database;
 // 把session保存到mysql中
 var options = {
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: 'root',
-  database: 'ithub'
+  host: db.host,
+  port: db.port,
+  user: db.user,
+  password: db.password,
+  database: db.database
 };
 
 var sessionStore = new MySQLStore(options);
