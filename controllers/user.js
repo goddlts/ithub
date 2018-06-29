@@ -12,6 +12,33 @@ exports.handleSignin = (req, res) => {
   // 2.1 验证用户的输入
   // TODO
   // 2.2 验证邮箱和密码是否正确
+  userModel.getByEmail(req.body.email, (err, user) => {
+    if (err) {
+      return res.send('服务器内部错误');
+    }
+    // 判断user是否存在
+    if (!user) {
+      // 不存在
+      return res.json({
+        code: 401,
+        msg: '邮箱不存在，请检查输入或者注册新用户'
+      });
+    }
+    // 判断密码是否正确
+    const password = md5(req.body.password);
+    if (password === user.password) {
+      // 是跳转 还是输出json？？
+      res.json({
+        code: 200,
+        msg: '登录成功'
+      });
+    } else {
+      res.json({
+        code: 402,
+        msg: '密码错误，请重新输入'
+      });
+    }
+  });
   
 };
 exports.showSignup = (req, res) => {
