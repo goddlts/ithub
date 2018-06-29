@@ -27,11 +27,16 @@ exports.handleSignin = (req, res) => {
     // 判断密码是否正确
     const password = md5(req.body.password);
     if (password === user.password) {
+      // 记录session 保存状态
+      delete user.password;
+      req.session.user = user;
+
       // 是跳转 还是输出json？？
       res.json({
         code: 200,
         msg: '登录成功'
       });
+      // res.redirect('/');
     } else {
       res.json({
         code: 402,

@@ -56,6 +56,7 @@
       // 传对象的时候，jQuery的方法，会自动把对象转换成email=123@11.cn&password=123形式
       // console.log(data);
       $.post('/signin', data, function (resData) {
+        // console.dir(resData);
         // { code: 200, msg: '' }
 
         var { code, msg } = resData;

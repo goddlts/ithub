@@ -8,6 +8,7 @@ const expressArtTemplate = require('express-art-template');
 // 导入路由模块
 const router = require('./routes/router');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const app = express();
 
 const PORT = 3000;
@@ -30,9 +31,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // { "name": "zs", "age": 18 }
 // app.use(bodyParser.json());
 
+// 配置session
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}));
+
 
 // 注册路由
 app.use(router);
+
+
 
 // 
 // app.get('/', (req, res) => {
