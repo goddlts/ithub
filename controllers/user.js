@@ -2,7 +2,6 @@ const md5 = require('md5');
 const userModel = require('../models/user');
 // 1 展示登录页面
 // 3 展示注册页面
-// 5 退出
 exports.showSignin = (req, res) => {
   // res.send('showSignin');
   res.render('signin.html');
@@ -93,6 +92,11 @@ exports.handleSignup = (req, res) => {
     
   });
 };
+// 5 退出
 exports.handleSignout = (req, res) => {
-  res.send('handleSignout');
+  // 销毁session
+  // delete req.session.user;
+  req.session.destroy();
+  // 跳转到登录
+  res.redirect('/signin');
 };
