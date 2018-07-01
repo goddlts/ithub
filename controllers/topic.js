@@ -44,6 +44,17 @@ exports.handleCreate = (req, res) => {
 };
 
 exports.showTopic = (req, res) => {
+  // 1. 通过查询字符串传参  /topic/show?id=1
+  // .get('/topic/show', topicCtrl.showTopic)
+  //  id=1&name=ab  ->>> { id: '1', name: 'ab' }
+  // req.query是对象，express内部把浏览器传递过来的字符串，解析成了对象
+  // console.log(req.query.id);
+
+  // 2. 动态路由
+  // .get('/topic/:topicID', topicCtrl.showTopic)
+  // console.log(req.params.topicID);
+
+
   res.send('showTopic');
 };
 exports.showEdit = (req, res) => {
