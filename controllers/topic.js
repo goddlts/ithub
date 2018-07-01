@@ -57,7 +57,8 @@ exports.showTopic = (req, res) => {
     }
     if (topic) {
       res.render('topic/show.html', {
-        topic
+        topic,
+        user: req.session.user
       })
     } else {
       res.send('您查询的话题不存在');

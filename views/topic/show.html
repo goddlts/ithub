@@ -19,6 +19,10 @@
     <div class="col-md-9">
       <article class="markdown-body">
       <h1 id="_1">{{ topic.title }}</h1>
+
+      {{ if user && topic.userId === user.id }}
+        <a href="#">编辑</a> <a href="#">删除</a>
+      {{ /if }}
       <p>{{ topic.content }}</p>
     </article>
       <div class="panel panel-default">
