@@ -44,6 +44,26 @@ exports.handleCreate = (req, res) => {
 };
 
 exports.showTopic = (req, res) => {
+  // 获取url传递的id，动态路由
+  const topicID = req.params.topicID;
+  if (isNaN(topicID)) {
+    // 不是一个数字
+    res.send('参数错误');
+  }
+
+  topicModel.getById(topicID, (err, topic) => {
+    if (err) {
+      return res.send('服务器内部错误');
+    }
+    if (topic) {
+      res.render('topic/show.html', {
+        topic
+      })
+    } else {
+      res.send('您查询的话题不存在');
+    }
+  });
+
   // 1. 通过查询字符串传参  /topic/show?id=1
   // .get('/topic/show', topicCtrl.showTopic)
   //  id=1&name=ab  ->>> { id: '1', name: 'ab' }
@@ -54,8 +74,7 @@ exports.showTopic = (req, res) => {
   // .get('/topic/:topicID', topicCtrl.showTopic)
   // console.log(req.params.topicID);
 
-
-  res.send('showTopic');
+  // res.send('showTopic');
 };
 exports.showEdit = (req, res) => {
   res.send('showEdit');
