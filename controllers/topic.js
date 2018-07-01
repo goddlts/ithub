@@ -48,7 +48,7 @@ exports.showTopic = (req, res) => {
   const topicID = req.params.topicID;
   if (isNaN(topicID)) {
     // 不是一个数字
-    res.send('参数错误');
+    return res.send('参数错误');
   }
 
   topicModel.getById(topicID, (err, topic) => {
@@ -106,8 +106,34 @@ exports.showEdit = (req, res) => {
   });
 };
 exports.handleEdit = (req, res) => {
-  
-
+  // ajax的请求
+  // .post('/topic/:topicID/edit', topicCtrl.handleEdit)
+  // 获取url中的id
+  const id = req.params.topicID;
+  // TODO 判断是否是数字
+  // 获取请求过来的数据
+  // req.body
+  req.body.id = id;
+  // TODO 数据验证
+  topicModel.update(req.body, (err, isOK) => {
+    if (err) {
+      return res.json({
+        code: 500,
+        msg: '服务器内部错误'
+      });
+    }
+    if (isOK) {
+      res.json({
+        code: 200,
+        msg: '修改成功'
+      });
+    } else {
+      res.json({
+        code: 403,
+        msg: '修改失败'
+      });
+    }
+  });
 };
 exports.handleDelete = (req, res) => {
   // 传统的请求响应方式实现
