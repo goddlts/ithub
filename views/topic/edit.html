@@ -16,17 +16,22 @@
           <label for="exampleInputEmail1">选择板块</label>
           <select name="categoryId" id="categoryId" class="form-control">
             {{ each categories }}
-              <option value="{{ $value.id }}">{{ $value.name }}</option>
+              <!-- 判断当前遍历到的分类id ，是否和当前topic对象的分类id一直 -->
+              {{ if $value.id === topic.categoryId }}
+                <option selected value="{{ $value.id }}">{{ $value.name }}</option>
+              {{ else }}
+                <option value="{{ $value.id }}">{{ $value.name }}</option>
+              {{ /if }}
             {{ /each }}
           </select>
         </div>
         <div class="form-group">
           <label for="title">标题</label>
-          <input type="text" class="form-control" id="title" name="title">
+          <input type="text" value="{{ topic.title }}" class="form-control" id="title" name="title">
         </div>
         <div class="form-group">
           <label for="content">内容</label>
-          <textarea class="form-control" id="content" name="content" rows="10"></textarea>
+          <textarea class="form-control" id="content" name="content" rows="10">{{ topic.content }}</textarea>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>

@@ -78,10 +78,36 @@ exports.showTopic = (req, res) => {
   // res.send('showTopic');
 };
 exports.showEdit = (req, res) => {
-  res.render('topic/edit.html');
+  // res.render('topic/edit.html');
+  // 获取所有版块（分类）
+  categoryModel.getAll((err, categories) => {
+    // 根据id获取当前话题
+    // .get('/topic/:topicID/edit', topicCtrl.showEdit)
+    const id = req.params.topicID;
+    if (isNaN(id)) {
+      // 判断id是否是数字，不是数字
+      return res.send('参数错误');
+    }
+    topicModel.getById(id, (err, topic) => {
+      if (err) {
+        return res.send('服务器内部错误');
+      }
+      if (topic) {
+        // 渲染模板，返回给浏览器
+        res.render('topic/edit.html', {
+          categories,
+          topic,
+          user: req.session.user
+        });
+      } else {
+        res.send('没有查询到数据');
+      }
+    });
+  });
 };
 exports.handleEdit = (req, res) => {
-  res.send('handleEdit');
+  
+
 };
 exports.handleDelete = (req, res) => {
   // 传统的请求响应方式实现
