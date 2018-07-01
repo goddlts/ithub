@@ -59,7 +59,7 @@ exports.showTopic = (req, res) => {
       res.render('topic/show.html', {
         topic,
         user: req.session.user
-      })
+      });
     } else {
       res.send('您查询的话题不存在');
     }
@@ -84,5 +84,21 @@ exports.handleEdit = (req, res) => {
   res.send('handleEdit');
 };
 exports.handleDelete = (req, res) => {
-  res.send('handleDelete');
+  // 传统的请求响应方式实现
+  // 1 获取url上传递过来的id
+  // .get('/topic/:topicID/delete', topicCtrl.handleDelete)
+  const id = req.params.topicID;
+  // 2 删除数据
+  topicModel.delete(id, (err, isOK) => {
+    if (err) {
+      return res.send('服务器内部错误');
+    }
+    if (isOK) {
+      res.redirect('/');
+    } else {
+      // 传统的请求响应方式，不好
+      // 错误的时候，也要重新渲染整个页面
+      res.send('删除失败');
+    }
+  });
 };
