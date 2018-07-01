@@ -22,7 +22,7 @@
           </a>
       </div>
       <div class="media-body">
-        <h4 class="media-heading"><a href="/topics/123">{{ $value.title }}</a></h4>
+        <h4 class="media-heading"><a href="/topic/{{ $value.id }}">{{ $value.title }}</a></h4>
         <p>{{ $value.nickname }} • {{ moment($value.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</p>
       </div>
     </li>
