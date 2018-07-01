@@ -78,7 +78,7 @@ exports.showTopic = (req, res) => {
   // res.send('showTopic');
 };
 exports.showEdit = (req, res) => {
-  res.send('showEdit');
+  res.render('topic/edit.html');
 };
 exports.handleEdit = (req, res) => {
   res.send('handleEdit');
